@@ -8,8 +8,9 @@
 
 	<ItemGroup>
 		<Compile Include="Models.fs" />
-		<Compile Include="Utilities.fs" />
 		<Compile Include="StudentsDb.fs" />
+		<Compile Include="Utilities.fs" />
+		<Compile Include="UI.fs" />
 		<Compile Include="Program.fs" />
 	</ItemGroup>
 

@@ -1,5 +1,39 @@
 ﻿module Utilities
+
 open Models
+open System.Windows.Forms
+
+// Input dialog for text input
+let createInputDialog (prompt: string) (defaultValue: string) =
+    let form = new Form()
+    form.Text <- "Input"
+    form.ClientSize <- System.Drawing.Size(300, 150)
+    
+    let label = new Label()
+    label.Text <- prompt
+    label.Location <- System.Drawing.Point(10, 10)
+    label.Size <- System.Drawing.Size(300, 40)
+    form.Controls.Add(label)
+
+    let textBox = new TextBox()
+    textBox.Text <- defaultValue
+    textBox.Location <- System.Drawing.Point(10, 50)
+    form.Controls.Add(textBox)
+
+    let button = new Button()
+    button.Text <- "OK"
+    button.Location <- System.Drawing.Point(10, 80)
+    button.DialogResult <- DialogResult.OK
+    form.Controls.Add(button)
+    
+    form.AcceptButton <- button
+    form.StartPosition <- FormStartPosition.CenterScreen
+
+    if form.ShowDialog() = DialogResult.OK then
+        textBox.Text
+    else
+        ""
+
 
 let calculateClassStatistics (passThreshold: float) (db: Student list) =
     match db with
