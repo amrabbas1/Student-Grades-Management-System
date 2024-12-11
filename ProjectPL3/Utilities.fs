@@ -65,3 +65,20 @@ let calculateClassStatistics (passThreshold: float) (db: Student list) =
         // Create the result string
         sprintf "Class Statistics:\nTotal Students: %d\nPassed: %d (%.2f%%)\nFailed: %d (%.2f%%)" 
                 totalStudents passed passRate failed failRate
+
+
+// Calculate the average grade for a student
+let getStudentAverage (id: int) (db: Student list) =
+    match List.tryFind (fun s -> s.ID = id) db with
+    | Some student when List.isEmpty student.Grades -> 0.0  // Return 0.0 if no grades
+    | Some student -> 
+        float (List.sum student.Grades) / float (List.length student.Grades)
+    | None -> 
+        -1.0  // Return -1.0 to indicate student not found
+
+
+let calculateClassAverage students =
+    let allGrades = students |> List.collect (fun s -> s.Grades)
+    let total = List.sum allGrades
+    let count = List.length allGrades
+    float total / float count       

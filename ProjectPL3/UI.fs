@@ -76,4 +76,33 @@ let CreateForm () =
     )
     form.Controls.Add(statsButton)
 
+    // Your Average Button
+    let avgButton = new Button(Text = "Your Average", Location = System.Drawing.Point(50, 300), Size = System.Drawing.Size(120, 30))
+    avgButton.Click.Add(fun _ ->
+        // Prompt the user to enter their ID
+        let idInput = createInputDialog "Enter Your ID:" ""
+    
+        if idInput <> "" then
+            let enteredId = int idInput
+            // Find the student by ID
+            match students |> List.tryFind (fun s -> s.ID = enteredId) with
+            | Some student -> 
+                let avg = getStudentAverage enteredId students
+                MessageBox.Show(sprintf "Your Average: %.2f" avg) |> ignore
+            | None -> 
+                MessageBox.Show("Invalid ID. Student not found.") |> ignore
+        else
+            MessageBox.Show("You must enter a valid ID.") |> ignore
+    )
+    form.Controls.Add(avgButton)
+
+
+    // Class Average Button
+    let classAvgButton = new Button(Text = "Class Average", Location = System.Drawing.Point(50, 350), Size = System.Drawing.Size(120, 30))
+    classAvgButton.Click.Add(fun _ -> 
+        let avg = calculateClassAverage students
+        MessageBox.Show(sprintf "Class Average: %.2f" avg) |> ignore
+    )
+    form.Controls.Add(classAvgButton)
+
     form
