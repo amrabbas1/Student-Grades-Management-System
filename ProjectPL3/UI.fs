@@ -105,4 +105,16 @@ let CreateForm () =
     )
     form.Controls.Add(classAvgButton)
 
+    // Highest and Lowest Grades button
+    let avgGradesButton = new Button(Text = "highest & lowest grades", Location = System.Drawing.Point(170, 50), Size = System.Drawing.Size(140, 30))
+    avgGradesButton.Click.Add(fun _ ->
+        match findHighestAndLowestAverages students with
+        | None -> 
+            ignore (MessageBox.Show("No students or grades available to analyze."))
+        | Some (highest, lowest) -> 
+            let message = sprintf "Highest Average Grade: %.2f\nLowest Average Grade: %.2f" highest lowest
+            ignore (MessageBox.Show(message))
+    )
+    form.Controls.Add(avgGradesButton)
+
     form

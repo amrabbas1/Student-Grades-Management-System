@@ -81,4 +81,25 @@ let calculateClassAverage students =
     let allGrades = students |> List.collect (fun s -> s.Grades)
     let total = List.sum allGrades
     let count = List.length allGrades
-    float total / float count       
+    float total / float count
+
+
+let findHighestAndLowestAverages (db: Student list) =
+    match db with
+    | [] -> 
+        None  // Return None if the database is empty
+    | _ ->
+        // Compute averages for each student
+        let averages =
+            db
+            |> List.map (fun student -> 
+                if student.Grades = [] then 0.0 // Handle empty grade lists
+                else float (List.sum student.Grades) / float (List.length student.Grades))
+        
+        match averages with
+        | [] -> 
+            None  // No averages available
+        | _ ->
+            let highest = List.max averages
+            let lowest = List.min averages
+            Some (highest, lowest)  // Return a tuple with highest and lowest averages
